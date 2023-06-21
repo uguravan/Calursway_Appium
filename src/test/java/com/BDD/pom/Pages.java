@@ -5,6 +5,15 @@ public class Pages extends BasePage {
 
     private Registration registration;
     private HomePage homePage;
+    private ItemPage itemPage;
+    private SearchPage searchPage;
+
+    public SearchPage searchPage() {
+        if (searchPage == null) {
+            searchPage = new SearchPage();
+        }
+        return searchPage;
+    }
 
     public HomePage homePage() {
         if (homePage == null) {
@@ -12,6 +21,7 @@ public class Pages extends BasePage {
         }
         return homePage;
     }
+
     public Registration registration() {
         if (registration == null) {
             registration = new Registration();
@@ -19,5 +29,11 @@ public class Pages extends BasePage {
         return registration;
     }
 
+    public ItemPage itemPage() {
+        if (itemPage == null) {
+            itemPage = new ItemPage();
+        }
+        return itemPage;
+    }
 
 }

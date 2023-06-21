@@ -16,6 +16,18 @@ public class HomePage extends Pages {
     @AndroidFindBy(id = "com.etsy.android:id/listing_image")
     public List<WebElement> homePageContents;
 
+    @AndroidFindBy(id = "com.etsy.android:id/search_src_text")
+    public List<WebElement> searchBoxList;
+
+    @AndroidFindBy(id = "com.etsy.android:id/search_src_text")
+    public WebElement searchBox;
+
+    @AndroidFindBy(xpath = "//*[@content-desc='Search by image']")
+    public WebElement camIcon;
+
+    @AndroidFindBy(xpath = "//*[@text='Select an existing photo']")
+    public WebElement selectExistPhoto;
+
 
 
 
