@@ -7,12 +7,14 @@ import java.util.List;
 
 public class HomePage extends Pages {
 
-    @AndroidFindBy(id = "com.etsy.android:id/empty_view_tertiary_button")
+    @AndroidFindBy(xpath = "//*[@text='Maybe later']")
     public WebElement maybeLater;
 
     @AndroidFindBy(id = "com.etsy.android:id/menu_bottom_nav_homee")
     public List<WebElement> homeIconList;
 
+    @AndroidFindBy(id = "com.etsy.android:id/listing_image")
+    public List<WebElement> homePageContents;
 
 
 

@@ -22,6 +22,11 @@ public class Registration extends Pages {
     @AndroidFindBy(className = "android.widget.Button")
     public WebElement registrationButton;
 
+    @AndroidFindBy(id = "com.etsy.android:id/cancelText")
+    public WebElement continueAsGuest;
+
+
+
 
 
 
