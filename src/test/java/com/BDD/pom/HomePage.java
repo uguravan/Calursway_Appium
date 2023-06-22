@@ -1,5 +1,7 @@
 package com.BDD.pom;
 
+import io.appium.java_client.pagefactory.AndroidBy;
+import io.appium.java_client.pagefactory.AndroidFindAll;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
 
@@ -28,7 +30,13 @@ public class HomePage extends Pages {
     @AndroidFindBy(xpath = "//*[@text='Select an existing photo']")
     public WebElement selectExistPhoto;
 
+    @AndroidFindAll({
+            @AndroidBy(id = "com.etsy.android:id/listing_image")
+    })
+    public List<WebElement> contentList;
 
+    @AndroidFindBy(xpath = "//*[@content-desc='Comfortwear ']")
+    public WebElement comfortWear;
 
 
 }

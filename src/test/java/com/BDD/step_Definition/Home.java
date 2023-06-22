@@ -2,6 +2,9 @@ package com.BDD.step_Definition;
 
 import com.BDD.pom.Pages;
 import com.utilities.MDriver;
+import com.utilities.M_Util;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.touch.offset.PointOption;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.Alert;
@@ -14,7 +17,9 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.utilities.MDriver.getAndroidDriver;
 import static com.utilities.MDriver.getMDriver;
@@ -24,6 +29,7 @@ public class Home extends Pages {
     List<String> contentList1 = new ArrayList<>();
     List<String> contentList2 = new ArrayList<>();
     int firstSize;
+    int contentFirstSize;
 
 
     @When("I click on continue as guest button")
@@ -140,7 +146,93 @@ public class Home extends Pages {
         }
         System.out.println("countOfItem = " + countOfItem);
 
-        Assert.assertTrue(countOfItem>2);
+        Assert.assertTrue(countOfItem > 2);
 
     }
+
+
+    @Given("I collect current total content number")
+    public void iCollectCurrentTotalContentNumber() throws InterruptedException {
+        contentFirstSize = homePage().contentList.size();
+        System.out.println("content1 size = " + contentFirstSize);
+    }
+
+
+    @When("I scroll down")
+    public void iScrollDown() {
+        M_Util.scrollDown();
+        //  M_Util.scrollDownToElement(By.xpath("//*[@content-desc='Comfortwear ']"));
+    }
+
+    @Then("I verify total content number increased")
+    public void iVerifyTotalContentNumberIncreased() {
+        int contentSecondSize = homePage().contentList.size();
+        System.out.println("contentSecondSize = " + contentSecondSize);
+        Assert.assertTrue(contentSecondSize > contentFirstSize);
+    }
+
+    @When("Add item in Set list")
+    public void do_it_previous_methods() throws InterruptedException {
+
+        Set<String> totalContent = new HashSet<>();
+
+        for (int j = 0; j < 3; j++) {
+
+            List<WebElement> contents = homePage().contentList;
+            List<String> myTextContents = new ArrayList<>(); // dummy
+
+            for (int i = 0; i < contents.size(); i++) {
+                myTextContents.add(contents.get(i).getAttribute("content-desc"));
+            }
+            totalContent.addAll(myTextContents);
+            System.out.println("totalContent = " + totalContent);
+            M_Util.scrollDown();
+        }
+    }
+
+
+    @When("I search {string} item")
+    public void iSearchItem(String itemTime) {
+        homePage().searchBox.click();
+        homePage().searchBox.sendKeys(itemTime);
+        getAndroidDriver().pressKey(new KeyEvent(AndroidKey.ENTER));
+
+    }
+
+    @And("I click on first item")
+    public void iClickOnFirstItem() throws InterruptedException {
+        Thread.sleep(1000);
+        searchPage().contentOfSearchListTitle.get(0).click();
+    }
+
+    @And("I scroll down to the Add to cart button")
+    public void iScrollDownToTheAddToCartButton() {
+        M_Util.scrollDownToElement(By.xpath("//*[@text='Add to cart']"));
+    }
+
+    @And("I select random options, if available, for the item")
+    public void iSelectRandomOptionsIfAvailableForTheItem() {
+        int sizeOFOpt = itemPage().optionsList.size();
+        for (int i = 0; i < sizeOFOpt; i++) {
+            itemPage().optionsList.get(i).click();
+            itemPage().optionsItemList.get(0).click();
+        }
+    }
+
+    @When("I click on the Add to cart button")
+    public void iClickOnTheAddToCartButton() {
+        itemPage().addToCart.click();
+    }
+
+
+    @Then("I verify that the item has been added to my basket")
+    public void iVerifyThatTheItemHasBeenAddedToMyBasket() {
+
+
+        String text = basketItemNumber.getAttribute("content-desc");
+        System.out.println("text = " + text);
+
+    }
+
+
 }
